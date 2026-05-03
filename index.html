@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blinkit Strategic Outreach Deck | Pixel Playground</title>
+    <!-- Tailwind CSS for layout utilities -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=VT323&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Fixed Neutrals */
+            --pixel-black: #0F172A;
+            --pixel-white: #FFFFFF;
+            --pixel-bg: #F8F8F8;
+            --pixel-grid: #E5E5E5;
+            
+            /* Brand Tokens (Blinkit) */
+            --pixel-pink: #FCD303; /* Blinkit Yellow */
+            --pixel-green: #FFD700; /* Gold Accent */
+            
+            /* Typography */
+            --font-pixel: 'Press Start 2P', monospace;
+            --font-body: 'Space Mono', monospace;
+            --font-data: 'VT323', monospace;
+            
+            /* Layout Tokens */
+            --border-width: 4px;
+            --shadow-offset: 6px;
+        }
+
+        body {
+            background-color: var(--pixel-bg);
+            background-image: 
+                linear-gradient(var(--pixel-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--pixel-grid) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: var(--pixel-black);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-pixel {
+            font-family: var(--font-pixel);
+            line-height: 1.4;
+        }
+
+        .font-data { font-family: var(--font-data); }
+        .font-body { font-family: var(--font-body); }
+
+        /* Core Components */
+        .pixel-border { border: var(--border-width) solid var(--pixel-black); }
+        .pixel-shadow { box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--pixel-black); }
+        
+        .pixel-card {
+            background: var(--pixel-white);
+            border: var(--border-width) solid var(--pixel-black);
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--pixel-black);
+            position: relative;
+        }
+
+        .pixel-btn {
+            display: inline-block;
+            border: var(--border-width) solid var(--pixel-black);
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--pixel-black);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-pixel);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: transform 0.1s linear, box-shadow 0.1s linear;
+            cursor: pointer;
+        }
+
+        .pixel-btn:active {
+            transform: translate(var(--shadow-offset), var(--shadow-offset));
+            box-shadow: 0px 0px 0px var(--pixel-black);
+        }
+
+        .pixel-btn-primary { background: var(--pixel-pink); color: var(--pixel-black); }
+        .pixel-btn-secondary { background: var(--pixel-black); color: var(--pixel-white); }
+
+        .pixel-stamp {
+            position: absolute;
+            font-family: var(--font-pixel);
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border: 2px solid var(--pixel-black);
+            box-shadow: 4px 4px 0px var(--pixel-black);
+            z-index: 10;
+            text-transform: uppercase;
+        }
+
+        /* Zigzag Divider */
+        .zigzag {
+            height: 24px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--pixel-black) 25%, transparent 25%) -12px 0,
+                        linear-gradient(225deg, var(--pixel-black) 25%, transparent 25%) -12px 0,
+                        linear-gradient(315deg, var(--pixel-black) 25%, transparent 25%),
+                        linear-gradient(45deg, var(--pixel-black) 25%, transparent 25%);
+            background-size: 24px 24px;
+            background-color: transparent;
+            margin: 4rem 0;
+        }
+
+        /* Ticker */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: var(--pixel-black);
+            color: var(--pixel-pink);
+            border-top: var(--border-width) solid var(--pixel-black);
+            border-bottom: var(--border-width) solid var(--pixel-black);
+            padding: 0.5rem 0;
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            box-sizing: content-box;
+            animation: ticker 25s linear infinite;
+        }
+        
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* Slide 1 Chart */
+        .h-chart-bar {
+            height: 48px;
+            border: var(--border-width) solid var(--pixel-black);
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--pixel-black);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        /* Slide 2 Animations */
+        .anim-group { opacity: 0; transform: translateY(20px); transition: opacity 0.3s, transform 0.3s; }
+        .anim-group.is-visible { opacity: 1; transform: translateY(0); }
+
+        .pie-chart {
+            width: 160px; height: 160px;
+            border-radius: 50%; /* standard pie base */
+            background: conic-gradient(
+                var(--pixel-pink) 0% 70%,
+                var(--pixel-black) 70% 90%,
+                var(--pixel-bg) 90% 100%
+            );
+            border: var(--border-width) solid var(--pixel-black);
+            position: relative;
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .pie-chart.is-visible { transform: scale(1); }
+        
+        .pie-center {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: var(--pixel-white); border: 2px solid var(--pixel-black);
+            padding: 0.5rem; text-align: center;
+        }
+
+        .v-bar-container { height: 200px; display: flex; align-items: flex-end; gap: 1rem; border-bottom: var(--border-width) solid var(--pixel-black); }
+        .v-bar {
+            width: 60px; border: var(--border-width) solid var(--pixel-black);
+            box-shadow: 4px -4px 0px var(--pixel-black);
+            position: relative; height: 0; transition: height 0.5s linear 0.2s;
+        }
+        
+        .v-bar.is-visible { height: var(--target-h); }
+        .v-bar span { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+
+        .h-hist-bar {
+            height: 32px; border: var(--border-width) solid var(--pixel-black); margin-bottom: 1rem;
+            width: 0; transition: width 0.5s linear 0.4s; position: relative;
+        }
+        .h-hist-bar.is-visible { width: var(--target-w); }
+
+        .matrix-2x2 {
+            aspect-ratio: 1; border: var(--border-width) solid var(--pixel-black);
+            background: linear-gradient(to right, var(--pixel-grid) 1px, transparent 1px) 0 0 / 25% 25%,
+                        linear-gradient(to bottom, var(--pixel-grid) 1px, transparent 1px) 0 0 / 25% 25%;
+            position: relative;
+        }
+        .matrix-marker {
+            width: 16px; height: 16px; border: 2px solid var(--pixel-black); position: absolute;
+            transform: translate(-50%, 50%) scale(0); transition: transform 0.3s linear;
+        }
+        .matrix-marker.is-visible { transform: translate(-50%, 50%) scale(1); }
+        .matrix-label {
+            position: absolute; top: 24px; left: 50%; transform: translateX(-50%);
+            background: var(--pixel-white); border: 2px solid var(--pixel-black);
+            padding: 2px 4px; font-size: 0.8rem; width: max-content; max-width: 120px;
+            text-align: center; z-index: 5;
+        }
+        
+        /* Slide 4 SWOT Colors */
+        .swot-s { background-color: rgba(252, 211, 3, 0.15); } /* pixel-pink tint */
+        .swot-w { background-color: rgba(15, 23, 42, 0.1); }   /* pixel-black tint */
+        .swot-o { background-color: var(--pixel-bg); }
+        .swot-t { background-color: var(--pixel-white); }
+        
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <main class="max-w-6xl mx-auto px-4 py-12 md:py-20">
+
+        <!-- SLIDE 1: INTRO -->
+        <section id="slide-1" class="mb-20">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="bg-[var(--pixel-pink)] pixel-border pixel-shadow p-3 inline-block">
+                    <span class="font-pixel text-xl uppercase tracking-tighter">Blinkit</span>
+                </div>
+                <div class="font-data text-2xl">Strategic Outreach Deck</div>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-8 items-center mb-12">
+                <div class="md:col-span-2">
+                    <p class="text-lg leading-relaxed mb-4">
+                        <strong class="font-pixel text-sm uppercase block mb-3">Hi, I'm Kunj — and here's what stands out about Blinkit:</strong>
+                        You've redefined convenience with <strong>10-minute delivery</strong>, <strong>10M+ monthly users</strong>, and <strong>$1B+ GMV</strong> — all while achieving <strong>EBITDA positivity</strong> in mature markets. 
+                    </p>
+                    <p class="text-lg leading-relaxed">
+                        With the advertising platform launch, category expansion, and Zomato synergy, you're evolving from "fast groceries" to a <strong>"Hyperlocal Commerce OS."</strong> The next unlock is driving profitability at scale.
+                    </p>
+                </div>
+                
+                <div class="md:col-span-3 pixel-card p-8">
+                    <!-- Chart Block 1 -->
+                    <div class="h-chart-bar bg-[var(--pixel-pink)] w-full">
+                        <span class="font-data text-2xl">10M+ MAU</span>
+                    </div>
+                    <!-- Chart Block 2 -->
+                    <div class="h-chart-bar bg-[var(--pixel-black)] text-[var(--pixel-white)] w-[70%]">
+                        <span class="font-data text-2xl">$1B+ GMV Run Rate</span>
+                    </div>
+                    <!-- Chart Block 3 -->
+                    <div class="h-chart-bar bg-[var(--pixel-pink)] w-[50%] relative mt-8">
+                        <span class="font-data text-2xl">EBITDA Positive (Select)</span>
+                        <div class="pixel-stamp bg-[var(--pixel-black)] text-[var(--pixel-white)] rotate-12 -right-8 -top-6">PROFITABLE SPEED</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ticker-wrap font-pixel text-sm">
+                <div class="ticker">
+                    EBITDA POSITIVE Q4 2024 &bull; ADS PLATFORM LAUNCH Q1 2025 &bull; CATEGORY EXPANSION Q2 2025 &bull; 10M+ MAU &bull; $1B+ GMV &bull; EBITDA POSITIVE Q4 2024 &bull; ADS PLATFORM LAUNCH Q1 2025
+                </div>
+            </div>
+        </section>
+
+        <div class="zigzag"></div>
+
+        <!-- SLIDE 2: USER ANALYSIS -->
+        <section id="slide-2" class="mb-20">
+            <h2 class="font-pixel text-xl mb-4">User Analysis: Actionable Segments</h2>
+            <p class="mb-10 max-w-3xl text-lg">Blinkit's base is time-poor, convenience-driven, and metro-centric. <strong>On-Time Delivery</strong> is the #1 priority for 75% of users. The unlock is tailoring the experience by segment.</p>
+            
+            <div class="grid md:grid-cols-2 gap-8 anim-group">
+                <!-- Chart 1: Pie -->
+                <div class="pixel-card p-6 flex flex-col items-center">
+                    <h3 class="font-pixel text-sm mb-8">Age Demographics</h3>
+                    <div class="pie-chart js-anim" data-target="">
+                        <div class="pie-center font-data text-xl">AGE<br>MIX</div>
+                    </div>
+                    <div class="w-full mt-6 grid grid-cols-3 gap-2 text-center font-data text-lg">
+                        <div class="flex items-center gap-2"><div class="w-3 h-3 bg-[var(--pixel-pink)] border-2 border-black"></div> 22-35: 70%</div>
+                        <div class="flex items-center gap-2"><div class="w-3 h-3 bg-[var(--pixel-black)] border-2 border-black"></div> 35-50: 20%</div>
+                        <div class="flex items-center gap-2"><div class="w-3 h-3 bg-[var(--pixel-bg)] border-2 border-black"></div> Other: 10%</div>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Order Type -->
+                <div class="pixel-card p-6">
+                    <h3 class="font-pixel text-sm mb-12">Order Type</h3>
+                    <div class="v-bar-container justify-center pb-2">
+                        <div class="v-bar bg-[var(--pixel-bg)] js-anim" style="--target-h: 20%;"><span class="font-data text-xl">Explore 10%</span></div>
+                        <div class="v-bar bg-[var(--pixel-black)] js-anim" style="--target-h: 60%;"><span class="font-data text-xl text-white">Planned 30%</span></div>
+                        <div class="v-bar bg-[var(--pixel-pink)] js-anim" style="--target-h: 100%;"><span class="font-data text-xl">Emerg. 60%</span></div>
+                    </div>
+                </div>
+
+                <!-- Chart 3: Pain Priority -->
+                <div class="pixel-card p-6">
+                    <h3 class="font-pixel text-sm mb-8">Pain Priority Histogram</h3>
+                    <div>
+                        <div class="font-data text-lg mb-1">On-Time Delivery (75%)</div>
+                        <div class="h-hist-bar bg-[var(--pixel-pink)] js-anim" style="--target-w: 75%;"></div>
+                        
+                        <div class="font-data text-lg mb-1 mt-4">No Stockouts (70%)</div>
+                        <div class="h-hist-bar bg-[var(--pixel-black)] js-anim" style="--target-w: 70%;"></div>
+                        
+                        <div class="font-data text-lg mb-1 mt-4">Fair Pricing (60%)</div>
+                        <div class="h-hist-bar bg-[var(--pixel-bg)] js-anim" style="--target-w: 60%;"></div>
+                    </div>
+                </div>
+
+                <!-- Chart 4: Matrix -->
+                <div class="pixel-card p-6">
+                    <h3 class="font-pixel text-sm mb-6">User Segment Matrix</h3>
+                    <div class="relative pl-6 pb-6">
+                        <div class="absolute left-0 bottom-6 top-0 w-1 bg-black flex flex-col justify-between items-center text-xs font-data">
+                            <span class="transform -translate-y-4">High Basket</span>
+                        </div>
+                        <div class="absolute left-6 bottom-0 right-0 h-1 bg-black flex justify-between items-center text-xs font-data">
+                            <span class="transform translate-y-4">High Urgency</span>
+                            <span class="transform translate-y-4">Low Urgency</span>
+                        </div>
+                        
+                        <div class="matrix-2x2 relative h-[250px] w-full">
+                            <!-- Emergency (30L, 70B -> high urgency is left, so x-axis is inverted here visually, but following exact spec coords) -->
+                            <div class="matrix-marker bg-[var(--pixel-pink)] js-anim" style="left: 30%; bottom: 70%; transition-delay: 0.1s;">
+                                <div class="matrix-label font-data">Emergency</div>
+                            </div>
+                            <!-- Pro -->
+                            <div class="matrix-marker bg-[var(--pixel-black)] js-anim" style="left: 70%; bottom: 60%; transition-delay: 0.3s;">
+                                <div class="matrix-label font-data">Time-Poor Pro</div>
+                            </div>
+                            <!-- Impulse -->
+                            <div class="matrix-marker bg-[var(--pixel-bg)] js-anim" style="left: 40%; bottom: 30%; transition-delay: 0.5s;">
+                                <div class="matrix-label font-data">Impulse Browser</div>
+                            </div>
+                            <!-- Planned -->
+                            <div class="matrix-marker bg-[var(--pixel-white)] js-anim" style="left: 60%; bottom: 40%; transition-delay: 0.7s;">
+                                <div class="matrix-label font-data">Planned Quick</div>
+                            </div>
+                            <!-- Arrow -->
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 1;">
+                                <path d="M 35% 65% L 55% 45%" stroke="var(--pixel-black)" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowhead)"/>
+                                <text x="45%" y="50%" class="font-data text-xs bg-white px-1">GROWTH PATH</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="zigzag"></div>
+
+        <!-- SLIDE 3: COMPETITOR -->
+        <section id="slide-3" class="mb-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="font-pixel text-xl mb-6">Competitor Landscape</h2>
+                    <p class="text-lg mb-8">Blinkit leads on <strong>Speed + Ecosystem Synergy</strong>. Zepto wins on premium branding. Swiggy Instamart competes on food+grocery synergy.</p>
+                    
+                    <div class="pixel-card p-4 border-[var(--pixel-black)]">
+                        <h4 class="font-pixel text-xs mb-4 uppercase">Feature Snapshot</h4>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-center border-b-2 border-dashed border-gray-300 pb-2">
+                                <span class="font-bold">10-Min Delivery</span>
+                                <span class="font-data text-lg bg-[var(--pixel-pink)] px-2 border-2 border-black">Blinkit ✅</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b-2 border-dashed border-gray-300 pb-2">
+                                <span class="font-bold">Zomato Ecosystem</span>
+                                <span class="font-data text-lg bg-[var(--pixel-pink)] px-2 border-2 border-black">Blinkit ✅</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="font-bold">Ads Platform</span>
+                                <span class="font-data text-lg bg-[var(--pixel-pink)] px-2 border-2 border-black">Blinkit ✅</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="relative p-8">
+                    <!-- Axes Labels OUTSIDE -->
+                    <div class="absolute top-1/2 -left-4 transform -translate-y-1/2 -rotate-90 origin-center font-data text-lg tracking-widest whitespace-nowrap">Super-App Synergy</div>
+                    <div class="absolute top-1/2 -right-12 transform -translate-y-1/2 -rotate-90 origin-center font-data text-lg tracking-widest whitespace-nowrap">Standalone</div>
+                    <div class="absolute bottom-0 left-12 font-data text-lg tracking-widest">1-2 Hours</div>
+                    <div class="absolute bottom-0 right-12 font-data text-lg tracking-widest">10-15 Minutes</div>
+
+                    <div class="matrix-2x2 h-[400px] w-full bg-[var(--pixel-white)] relative">
+                        <!-- Quadrant Lines -->
+                        <div class="absolute top-0 bottom-0 left-1/2 w-1 bg-black"></div>
+                        <div class="absolute left-0 right-0 top-1/2 h-1 bg-black"></div>
+
+                        <!-- Markers (EXACT Coordinates from spec) -->
+                        <div class="matrix-marker bg-[var(--pixel-pink)] js-anim" style="left: 90%; bottom: 85%; width: 24px; height: 24px; z-index:10;">
+                            <div class="matrix-label font-pixel text-[10px] bg-[var(--pixel-pink)] font-bold">BLINKIT</div>
+                        </div>
+                        
+                        <div class="matrix-marker bg-[var(--pixel-black)] js-anim" style="left: 80%; bottom: 40%;">
+                            <div class="matrix-label font-data text-white bg-black">Zepto</div>
+                        </div>
+                        
+                        <div class="matrix-marker bg-[var(--pixel-bg)] js-anim" style="left: 70%; bottom: 60%;">
+                            <div class="matrix-label font-data">Swiggy Instamart</div>
+                        </div>
+
+                        <div class="matrix-marker bg-[var(--pixel-white)] js-anim" style="left: 30%; bottom: 70%;">
+                            <div class="matrix-label font-data">Amazon Fresh</div>
+                        </div>
+
+                        <div class="matrix-marker bg-gray-400 js-anim" style="left: 20%; bottom: 30%;">
+                            <div class="matrix-label font-data">BigBasket</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="zigzag"></div>
+
+        <!-- SLIDE 4: SWOT & DRIVERS -->
+        <section id="slide-4" class="mb-20">
+            <h2 class="font-pixel text-xl mb-10 text-center">Strategic Analysis</h2>
+            
+            <div class="grid md:grid-cols-2 gap-0 pixel-border pixel-shadow mb-12 bg-black w-full max-w-4xl mx-auto border-4">
+                <div class="swot-s p-6 border-b-4 border-r-0 md:border-r-4 md:border-b-4 border-black text-[var(--pixel-black)] bg-[var(--pixel-pink)]">
+                    <h3 class="font-pixel text-sm mb-4">Strengths</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li>Zomato ecosystem: capital, user base, tech infrastructure.</li>
+                        <li>First-mover advantage in quick commerce operations.</li>
+                        <li>Early profitability in mature markets.</li>
+                    </ul>
+                </div>
+                <div class="swot-w p-6 border-b-4 border-black bg-[var(--pixel-white)]">
+                    <h3 class="font-pixel text-sm mb-4">Weaknesses</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li>High operational costs (dark stores, delivery fleet).</li>
+                        <li>Thin margins on core grocery items.</li>
+                        <li>Geographic concentration in metros.</li>
+                    </ul>
+                </div>
+                <div class="swot-o p-6 border-b-4 md:border-b-0 border-r-0 md:border-r-4 border-black">
+                    <h3 class="font-pixel text-sm mb-4">Opportunities</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li>Advertising platform growth (high-margin revenue).</li>
+                        <li>Private label expansion (higher margins).</li>
+                        <li>Zomato One membership integration.</li>
+                    </ul>
+                </div>
+                <div class="swot-t p-6 bg-white border-black">
+                    <h3 class="font-pixel text-sm mb-4">Threats</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li>Zepto's aggressive funding and expansion.</li>
+                        <li>Swiggy Instamart's ecosystem advantage.</li>
+                        <li>Regulatory scrutiny on dark store zoning.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Action Drivers -->
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto anim-group">
+                <div class="pixel-card p-6 border-[var(--pixel-pink)]">
+                    <div class="text-3xl mb-2">🎮</div>
+                    <h4 class="font-pixel text-[10px] uppercase mb-4 leading-relaxed">Want Reliable Speed, Not Just Promised Speed</h4>
+                    <p class="text-xs bg-yellow-100 p-2 border-2 border-dashed border-black"><strong>So What:</strong> Lead with "On-Time or Free" guarantee to build trust.</p>
+                </div>
+                <div class="pixel-card p-6 border-[var(--pixel-black)]">
+                    <div class="text-3xl mb-2">🕹️</div>
+                    <h4 class="font-pixel text-[10px] uppercase mb-4 leading-relaxed">Ads + Private Labels + Ecosystem Synergy</h4>
+                    <p class="text-xs bg-gray-100 p-2 border-2 border-dashed border-black"><strong>So What:</strong> Invest in self-serve ad platform and Zomato One integration.</p>
+                </div>
+                <div class="pixel-card p-6 border-gray-400">
+                    <div class="text-3xl mb-2">🎯</div>
+                    <h4 class="font-pixel text-[10px] uppercase mb-4 leading-relaxed font-data text-lg tracking-wide font-bold">Profitability Focus + Tier 2 Adoption</h4>
+                    <p class="text-xs bg-blue-50 p-2 border-2 border-dashed border-black"><strong>So What:</strong> Scale advertising and optimize dark store model for Tier 2.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="zigzag"></div>
+
+        <!-- SLIDE 5: INSIGHT & OPPORTUNITY -->
+        <section id="slide-5" class="mb-20">
+            <div class="max-w-4xl mx-auto anim-group">
+                <!-- Insight Box -->
+                <div class="pixel-card p-8 border-[var(--pixel-pink)] mb-12 relative">
+                    <div class="pixel-stamp bg-[var(--pixel-pink)] text-black rotate-[12deg] -right-4 -top-4 font-bold text-lg">KEY INSIGHT</div>
+                    <p class="text-xl leading-relaxed font-bold">
+                        Blinkit has won the "Speed War" with 10-minute delivery, but the real battleground is shifting to <span class="bg-[var(--pixel-pink)] px-1 border-2 border-black">"Profitability at Scale."</span> The unlock is leveraging Zomato's ecosystem to increase basket size, monetize attention through advertising, and expand into higher-margin categories—while maintaining the speed that defines the brand.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 relative">
+                    <!-- Flow arrows logic purely visual layout via grid gap -->
+                    <div class="pixel-card p-6 border-[var(--pixel-black)]">
+                        <div class="text-2xl mb-2">🎮</div>
+                        <h4 class="font-pixel text-[11px] mb-3 leading-tight">ZOMATO FLYWHEEL</h4>
+                        <p class="text-xs text-gray-700">Deep integration where food orders trigger grocery suggestions. Predict demand.</p>
+                    </div>
+                    
+                    <div class="pixel-card p-6 border-[var(--pixel-pink)] bg-yellow-50 relative transform md:-translate-y-4">
+                        <div class="pixel-stamp bg-[var(--pixel-black)] text-white rotate-[-5deg] -left-4 -top-4 text-[10px]">EXPLORE</div>
+                        <div class="text-2xl mb-2">🕹️</div>
+                        <h4 class="font-pixel text-[11px] mb-3 leading-tight">ADS-FIRST REVENUE</h4>
+                        <p class="text-xs text-gray-700">Scale Blinkit Ads into a self-serve platform for CPG brands to target intent.</p>
+                    </div>
+
+                    <div class="pixel-card p-6 border-gray-400">
+                        <div class="text-2xl mb-2">🎯</div>
+                        <h4 class="font-pixel text-[11px] mb-3 leading-tight">PRIVATE LABEL EXPANSION</h4>
+                        <p class="text-xs text-gray-700">Launch Blinkit-branded essentials with higher margins. "Trusted Quality."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: CTA -->
+        <section id="slide-6" class="mb-20 pt-10 pb-10">
+            <div class="max-w-2xl mx-auto pixel-card p-0 border-[6px] border-[var(--pixel-black)] bg-[var(--pixel-white)] text-center relative overflow-hidden">
+                <div class="h-2 w-full bg-[var(--pixel-pink)]"></div>
+                
+                <div class="p-10">
+                    <h2 class="font-pixel text-xl md:text-2xl mb-6">Let's Build Faster.</h2>
+                    <p class="text-lg mb-10 leading-relaxed max-w-lg mx-auto">
+                        I'm currently looking for an internship for Summer 2026, and would be excited to work on problems like this with your team.
+                    </p>
+
+                    <div class="flex flex-col md:flex-row justify-center gap-4 mb-10">
+                        <a href="https://www.linkedin.com/in/kunjharjai/" target="_blank" class="pixel-btn pixel-btn-secondary">LinkedIn &rarr;</a>
+                        <a href="https://calendly.com/kunjharjai13/30min" target="_blank" class="pixel-btn pixel-btn-primary">Schedule 15-Min Chat &rarr;</a>
+                    </div>
+
+                    <div class="text-left border-t-2 border-dashed border-gray-300 pt-6">
+                        <p class="font-bold text-lg mb-1">Kunj Harjai</p>
+                        <p class="text-sm font-data text-gray-600">Kunj.24141@sscbs.du.ac.in <br> +91 93 109 29 096</p>
+                    </div>
+                </div>
+
+                <div class="bg-[var(--pixel-bg)] border-t-[var(--border-width)] border-black p-3 text-xs font-pixel flex items-center justify-center">
+                    <span class="inline-block animate-pulse mr-2">💭</span> I have rough thoughts on Hyperlocal OS frameworks.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SVG Definitions for markers -->
+    <svg style="width:0;height:0;position:absolute;">
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="var(--pixel-black)"/>
+            </marker>
+        </defs>
+    </svg>
+
+    <script>
+        // Simple Intersection Observer for Animations
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add class to parent group if exists
+                        if (entry.target.classList.contains('anim-group')) {
+                            entry.target.classList.add('is-visible');
+                            // Find and trigger children
+                            const children = entry.target.querySelectorAll('.js-anim');
+                            children.forEach(child => child.classList.add('is-visible'));
+                        } else if (entry.target.classList.contains('js-anim')) {
+                            entry.target.classList.add('is-visible');
+                        }
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            const targets = document.querySelectorAll('.anim-group, .matrix-marker');
+            targets.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
